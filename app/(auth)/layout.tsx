@@ -2,7 +2,7 @@ import React from 'react'
 
 function Layout({children}:{children:React.ReactNode}) {
   return (
-    <main>{children}</main>
+    <main className='flex flex-col justify-center items-center h-screen mx-auto max-w-[1120px]'>{children}</main>
   )
 }
 
