@@ -1,7 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-import User from '@/lib/database/models/user.modal'
+import User from '@/lib/database/models/userModal'
 import connectToDatabase from '@/lib/database/connectionDatabase'
 
 export async function POST(req: Request) {
@@ -51,7 +51,6 @@ export async function POST(req: Request) {
 
   // Do something with the payload
   // For this guide, you simply log the payload to the console
-  const { id } = event.data;
   const eventType = event.type;
 
   if (eventType === 'user.created') {
@@ -67,6 +66,7 @@ export async function POST(req: Request) {
 
         const newUser = new User(user)
         newUser.save()
+        console.log("done");
   }
 
   return new Response('', { status: 200 })
