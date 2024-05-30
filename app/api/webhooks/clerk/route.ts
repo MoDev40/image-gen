@@ -66,7 +66,31 @@ export async function POST(req: Request) {
 
         const newUser = new User(user)
         newUser.save()
-        console.log("done");
+  }
+
+  if(eventType === 'user.updated'){
+    const {id,email_addresses,last_name,first_name,image_url,username,} = event.data;
+
+    await User.findOneAndUpdate(
+      { clerkId: id },
+      {
+        $set: {
+          username: username,
+          firstName: first_name,
+          lastName: last_name,
+          email: email_addresses[0].email_address,
+          photo: image_url
+        }
+      },
+      { new: true }
+    );
+    
+  }
+
+  if(eventType === "user.deleted"){
+    await User.findOneAndDelete(
+      { clerkId: event.data.id }
+    );
   }
 
   return new Response('', { status: 200 })
