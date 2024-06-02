@@ -89,7 +89,7 @@ function Layout({children}:{children:React.ReactNode}) {
                     navLinks.slice(0,6).map(nav =>(
                         <li key={nav.route}>
                         <Link
-                        href="#"
+                        href={nav.route}
                         className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                         >
                         <Image src={nav.icon} alt={nav.label} width={25} height={18}/>
@@ -112,7 +112,7 @@ function Layout({children}:{children:React.ReactNode}) {
                     navLinks.slice(6).map(nav =>(
                         <li key={nav.route}>
                         <Link
-                        href="#"
+                        href={nav.route}
                         className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                         >
                         <Image src={nav.icon} alt={nav.label} width={25} height={18}/>
@@ -135,12 +135,8 @@ function Layout({children}:{children:React.ReactNode}) {
           </div>
           <UserButton afterSignOutUrl="/"/>
         </header>
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-          <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-              {children}
-            </div>
-          </div>
+        <main className="flex flex-1 items-start  p-4 sm:px-6 sm:py-0 flex-col">
+          {children}
         </main>
       </div>
       </div>
