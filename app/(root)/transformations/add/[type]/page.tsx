@@ -1,8 +1,25 @@
+import Header from '@/components/shared/Header'
 import React from 'react'
+import { transformationTypes } from '@/constants'
 
-function AddTransformationType() {
+interface Params {
+  type:string
+}
+
+interface TransformationType {
+  type: string;
+  title: string;
+  subTitle: string;
+  config: {
+    [key: string]: any;
+  };
+  icon: string;
+}
+function AddTransformationType({params}:{params:Params}) {
+  const {type} = params
+  const transform : TransformationType = transformationTypes[type as keyof typeof transformationTypes]
   return (
-    <div>AddTransformationType</div>
+    <Header title={transform.title} subtitle={transform.subTitle}/>
   )
 }
 
