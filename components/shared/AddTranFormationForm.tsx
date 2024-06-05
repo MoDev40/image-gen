@@ -14,6 +14,7 @@ export type Image = {
   secureURL: string; 
   width: number;
   height: number;
+  publicId: string;
 }
 function AddTranFormationForm({type}:{type:string}) {
   const [image,setImage] = useState<Image>({} as Image)
@@ -53,7 +54,7 @@ function AddTranFormationForm({type}:{type:string}) {
                 <SelectContent>
                   {
                     Object.keys(aspectRatioOptions).map(key =>(
-                      <SelectItem value={key}>{aspectRatioOptions[key as keyof typeof aspectRatioOptions].label}</SelectItem>
+                      <SelectItem key={key} value={key} >{aspectRatioOptions[key as keyof typeof aspectRatioOptions].label}</SelectItem>
                     ))
                   }
                 </SelectContent>
@@ -103,7 +104,7 @@ function AddTranFormationForm({type}:{type:string}) {
                 <MediaUploader
                 onValueChange={field.onChange}
                 publicId={field.value}
-                secureURL={image.secureURL}
+                imageURL={image.publicId}
                 setImage={setImage}
                 />
               </FormControl>
