@@ -66,15 +66,15 @@ Make sure you have the following installed:
    Create a `.env.local` file in the root of your project and add the following environment variables:
 
    ```plaintext
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-    CLERK_SECRET_KEY
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+    CLERK_SECRET_KEY=
 
     NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
     NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/sign-in
 
-    MONGODB_URI=your_mongodb_uri
+    DATABASE_URL=your_mongodb_uri
     
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
     CLOUDINARY_API_KEY=your_cloudinary_api_key

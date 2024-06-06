@@ -3,14 +3,16 @@ import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { useToast } from "../ui/use-toast";
 import { Image as ImageInterface } from "./AddTranFormationForm";
+import { skeleton } from '@/lib/utils';
+import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
 
 interface MediaUploaderProps {
     setImage:Dispatch<SetStateAction<ImageInterface>>;
+    image:ImageInterface
     onValueChange:(value:string) => void;
-    imageURL:string;
     publicId: string;
 }
-function MediaUploader({publicId,imageURL,setImage,onValueChange}: MediaUploaderProps) {
+function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderProps) {
   const { toast } = useToast()
 
   function handleSuccess(result:any) {
@@ -18,7 +20,7 @@ function MediaUploader({publicId,imageURL,setImage,onValueChange}: MediaUploader
         ...previous,
         width: result?.info?.width,
         height: result?.info?.height,
-        secureURL: result?.info?.secure_url,
+        secureUrl: result?.info?.secure_url,
         publicId:result?.info?.public_id
     }))
 
@@ -59,10 +61,11 @@ function MediaUploader({publicId,imageURL,setImage,onValueChange}: MediaUploader
             publicId ?
             <div className="cursor-pointer overflow-hidden rounded-[10px]">
             <CldImage
-                src={publicId || imageURL}
-                width={250}
-                height={200}
+                src={publicId || image?.publicId}
+                width={image?.width}
+                height={image?.height}
                 alt="image/uploaded"
+                placeholder={skeleton as PlaceholderValue}
               />
             </div> :
             <div className="flex flex-col justify-center items-center h-auto bg-white shadow p-5 rounded">
