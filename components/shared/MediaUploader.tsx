@@ -54,7 +54,7 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
     }}>
       {({ open }) =>(
         <div className="flex flex-col gap-4">
-          <h3 className="h3-bold text-dark-600">
+          <h3 className="font-bold text-slate-700">
             Original
           </h3>
           {
@@ -68,12 +68,12 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
                 placeholder={skeleton as PlaceholderValue}
               />
             </div> :
-            <div className="flex flex-col justify-center items-center h-auto bg-white shadow p-5 rounded">
+            <div className="flex flex-col justify-center items-center h-24 bg-white shadow p-5 rounded">
               <button type="button" onClick={() => open()}>
                 <Image
                 src='/assets/icons/add.svg'
-                width={20}
-                height={120}
+                width={24}
+                height={24}
                 alt="upload-btn"
                 />
               </button>
