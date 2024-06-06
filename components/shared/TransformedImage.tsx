@@ -1,10 +1,12 @@
 "use client"
 import { skeleton } from "@/lib/utils";
-import { CldImage } from "next-cloudinary";
+import { CldImage, getCldImageUrl } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { Image as ImageInterface } from "./AddTranFormationForm";
+import { Button } from "../ui/button";
+import Download from "./Download";
 
 interface TransFormedProps {
   image:ImageInterface;
@@ -15,14 +17,24 @@ interface TransFormedProps {
   setIsTransforming:Dispatch<SetStateAction<boolean>>;
 }
 function TransformedImage({image,transformationConfig,isTransforming,setIsTransforming}:TransFormedProps) {
-  
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="">
+      <div className="flex flex-row justify-between">
           <h1 className="font-bold text-slate-700">Transformed</h1>
+          { image?.publicId && transformationConfig &&
+            <Download
+            url={getCldImageUrl({
+              width: image?.width,
+              height: image?.height,
+              src: image?.publicId,
+              ...transformationConfig
+            })}
+          />
+        } 
       </div>
       { image?.publicId && transformationConfig ?
-        <div className="cursor-pointer overflow-hidden rounded-[10px]">
+        <div className="cursor-pointer overflow-hidden">
             <CldImage
               src={image.publicId}
               width={image?.width}

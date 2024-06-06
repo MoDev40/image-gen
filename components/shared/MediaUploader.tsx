@@ -28,7 +28,7 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
 
     toast({
       title: "Image Uploaded",
-      description: "Image uploaded successfully 1 credit has been used", 
+      description: "Image uploaded successfully 5 credit has been used", 
       duration: 5000,
       className:"bg-green-400 text-white"
     })
@@ -59,7 +59,7 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
           </h3>
           {
             publicId ?
-            <div className="cursor-pointer overflow-hidden rounded-[10px]">
+            <div className="cursor-pointer overflow-hidden">
             <CldImage
                 src={publicId || image?.publicId}
                 width={image?.width}
