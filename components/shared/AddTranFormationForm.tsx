@@ -11,7 +11,7 @@ import { useState } from "react"
 import { aspectRatioOptions } from "@/constants"
 
 export type Image = {
-  secureURL: string; 
+  secureUrl: string; 
   width: number;
   height: number;
   publicId: string;
@@ -24,7 +24,7 @@ function AddTranFormationForm({type}:{type:string}) {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6 mt-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-5">
       <FormField
           control={form.control}
           name="title"
@@ -102,9 +102,9 @@ function AddTranFormationForm({type}:{type:string}) {
               <FormLabel/>
               <FormControl>
                 <MediaUploader
+                image={image}
                 onValueChange={field.onChange}
                 publicId={field.value}
-                imageURL={image.publicId}
                 setImage={setImage}
                 />
               </FormControl>
