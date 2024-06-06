@@ -1,14 +1,15 @@
 "use client"
+import { aspectRatioOptions, transformationTypes } from "@/constants"
+import { TransFormationInputs, transformSchema } from "@/types/schema.forms"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { Input } from "../ui/input"
-import { TransFormationInputs, transformSchema } from "@/types/schema.forms"
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import MediaUploader from "./MediaUploader"
-import { useState } from "react"
-import { aspectRatioOptions } from "@/constants"
+import TransformedImage from "./TransformedImage"
 
 export type Image = {
   secureUrl: string; 
@@ -18,9 +19,34 @@ export type Image = {
 }
 function AddTranFormationForm({type}:{type:string}) {
   const [image,setImage] = useState<Image>({} as Image)
+  const [config,setConfig] = useState<any>()
+  const [isTransforming,setIsTransforming] = useState<boolean>(false)
+
 
   const form = useForm<TransFormationInputs>({resolver:zodResolver(transformSchema)})
   const onSubmit : SubmitHandler<TransFormationInputs> = (data) => {
+    setIsTransforming(true);
+    const config = transformationTypes[type as keyof typeof transformationTypes].config
+
+    if(type === 'fill'){
+      const imgSize = aspectRatioOptions[data.aspectRatio as keyof typeof aspectRatioOptions]
+      setImage({...image, width: imgSize.width, height: imgSize.height})
+    }
+
+    if(type === 'remove' || type === 'recolor'){
+      const updatedConfig = {
+          to: data?.color,
+          prompt: data?.prompt
+        }
+        setConfig({
+          ...config,
+          [type]: {
+            ...updatedConfig
+          }
+        });
+      }else{
+      setConfig(config)
+    }
   }
   return (
     <Form {...form}>
@@ -94,6 +120,7 @@ function AddTranFormationForm({type}:{type:string}) {
           )}
         />
       }
+      <div className="grid grid-cols-2 items-center gap-3">
       <FormField
           control={form.control}
           name="publicId"
@@ -112,7 +139,14 @@ function AddTranFormationForm({type}:{type:string}) {
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit">Transform</Button>
+        <TransformedImage
+          image={image}
+          transformationConfig={config}
+          isTransforming={isTransforming}
+          setIsTransforming={setIsTransforming}
+        />
+        </div>
+        <Button disabled={isTransforming} className="w-full" type="submit">Transform</Button>
       </form>
     </Form>
   )
