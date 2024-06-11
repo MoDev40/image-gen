@@ -1,5 +1,3 @@
-import React from 'react'
-import { Button } from '../ui/button'
 import Image from 'next/image'
 import axios from "axios"
 
@@ -24,14 +22,14 @@ function Download({url}:{url:string}) {
     }
   return (
     <div>
-    <Button onClick={handleDownload} type="button" variant="outline">
+    <button onClick={handleDownload} type="button">
       <Image 
       src='/assets/icons/download.svg'
       alt="download"
       width={24}
       height={24}
       />
-    </Button>
+    </button>
   </div>  )
 }
 

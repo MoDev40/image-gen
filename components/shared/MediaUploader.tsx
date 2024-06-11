@@ -47,7 +47,7 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
     <CldUploadWidget
     onSuccess={handleSuccess}
     onError={handleError} 
-    uploadPreset="ImageGen"
+    // uploadPreset="ImageGen"
     options={{
       multiple:false,
       resourceType:"image"
@@ -77,7 +77,7 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
                 alt="upload-btn"
                 />
               </button>
-              <p>Click button to upload image</p>
+              <p>upload image</p>
             </div>
           }
         </div>
