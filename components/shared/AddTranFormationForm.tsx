@@ -17,7 +17,7 @@ export type Image = {
   height: number;
   publicId: string;
 }
-function AddTranFormationForm({type}:{type:string}) {
+function AddTranFormationForm({type,user}:{type:string,user:DBUser}) {
   const [image,setImage] = useState<Image>({} as Image)
   const [config,setConfig] = useState<any>()
   const [isTransforming,setIsTransforming] = useState<boolean>(false)
