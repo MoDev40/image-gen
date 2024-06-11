@@ -1,6 +1,7 @@
 import AddTranFormationForm from '@/components/shared/AddTranFormationForm';
 import Header from '@/components/shared/Header';
 import { transformationTypes } from '@/constants';
+import { API } from '@/lib/config';
 import { auth } from '@clerk/nextjs/server';
 import axios from 'axios';
 
@@ -19,7 +20,7 @@ interface TransformationType {
 }
 
 async function getUser (id:string) : Promise<DBUser> {
-  const res = await axios.get(`http://localhost:3000/api/users/${id}`);
+  const res = await axios.get(`${API}/users/${id}`);
   return await res.data.user;
 }
 
