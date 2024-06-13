@@ -1,21 +1,25 @@
+"use client"
+import { API } from '@/lib/config';
+import { skeleton } from '@/lib/utils';
+import axios from 'axios';
 import { CldImage, CldUploadWidget } from 'next-cloudinary';
+import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { useToast } from "../ui/use-toast";
 import { Image as ImageInterface } from "./AddTranFormationForm";
-import { skeleton } from '@/lib/utils';
-import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
 
 interface MediaUploaderProps {
-    setImage:Dispatch<SetStateAction<ImageInterface>>;
-    image:ImageInterface
-    onValueChange:(value:string) => void;
-    publicId: string;
+  setImage:Dispatch<SetStateAction<ImageInterface>>;
+  image:ImageInterface
+  onValueChange:(value:string) => void;
+  publicId: string;
+  user:DBUser
 }
-function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderProps) {
+function MediaUploader({publicId,image,user,setImage,onValueChange}: MediaUploaderProps) {
   const { toast } = useToast()
 
-  function handleSuccess(result:any) {
+  async function handleSuccess(result:any) {
     setImage((previous)=> ({
         ...previous,
         width: result?.info?.width,
@@ -25,7 +29,7 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
     }))
 
     onValueChange(result?.info?.public_id)
-
+    await axios.put(`${API}/users/${user._id}/decrease`)
     toast({
       title: "Image Uploaded",
       description: "Image uploaded successfully 5 credit has been used", 
@@ -47,7 +51,7 @@ function MediaUploader({publicId,image,setImage,onValueChange}: MediaUploaderPro
     <CldUploadWidget
     onSuccess={handleSuccess}
     onError={handleError} 
-    // uploadPreset="ImageGen"
+    uploadPreset="ImageGen"
     options={{
       multiple:false,
       resourceType:"image"

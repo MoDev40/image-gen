@@ -1,4 +1,5 @@
 import AddTranFormationForm from '@/components/shared/AddTranFormationForm';
+import CreditAlert from '@/components/shared/CreditAlert';
 import Header from '@/components/shared/Header';
 import { transformationTypes } from '@/constants';
 import { API } from '@/lib/config';
@@ -32,7 +33,8 @@ async function AddTransformationType({params}:{params:Params}) {
   return (
     <>
     <Header title={transform.title} subtitle={transform.subTitle}/>
-    <AddTranFormationForm user={user}  type={transform.type}/>
+    {user.creditBalance === 0 ? <CreditAlert/> :
+    <AddTranFormationForm user={user}  type={transform.type}/>}
     </>
   )
 }
