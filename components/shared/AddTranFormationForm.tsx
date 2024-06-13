@@ -1,5 +1,5 @@
 "use client"
-import { aspectRatioOptions, transformationTypes } from "@/constants"
+import { aspectRatioOptions, creditFee, transformationTypes } from "@/constants"
 import { TransFormationInputs, transformSchema } from "@/types/schema.forms"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from "react"
@@ -10,6 +10,7 @@ import { Input } from "../ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import MediaUploader from "./MediaUploader"
 import TransformedImage from "./TransformedImage"
+import CreditAlert from "./CreditAlert"
 
 export type Image = {
   secureUrl: string; 
@@ -49,6 +50,7 @@ function AddTranFormationForm({type,user}:{type:string,user:DBUser}) {
     }
   }
   return (
+    user.creditBalance === 0 ? <CreditAlert/> :
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-5">
       <FormField
