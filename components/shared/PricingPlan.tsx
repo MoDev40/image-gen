@@ -1,3 +1,4 @@
+"use client"
 import { plans } from '@/constants';
 import { Button } from '../ui/button';
 
