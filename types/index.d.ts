@@ -21,3 +21,18 @@ type DBUser = {
     updatedAt: string;
     __v: number;
 }
+
+type DBImage = {
+    title: string;
+    transformationType: string;
+    publicId: string;
+    secureUrl: string; 
+    width?: number;
+    height?: number;
+    config?: object; 
+    transformedUrl?: string; 
+    aspectRatio?: string;
+    color?: string;
+    prompt?: string;
+    author: string;
+}
