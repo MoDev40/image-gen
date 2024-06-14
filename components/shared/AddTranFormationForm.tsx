@@ -8,9 +8,9 @@ import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import CreditAlert from "./CreditAlert"
 import MediaUploader from "./MediaUploader"
 import TransformedImage from "./TransformedImage"
+import SaveImage from "./SaveImage"
 
 export type Image = {
   secureUrl: string; 
@@ -25,12 +25,14 @@ interface TransformationProps {
 }
 function AddTranFormationForm({type,user}:TransformationProps) {
   const [image,setImage] = useState<Image>({} as Image)
+  const [imageData,setImageData] = useState<DBImage | null >(null)
   const [config,setConfig] = useState<any>()
   const [isTransforming,setIsTransforming] = useState<boolean>(false)
 
 
   const form = useForm<TransFormationInputs>({resolver:zodResolver(transformSchema)})
-  const onSubmit : SubmitHandler<TransFormationInputs> = (data) => {
+  const onSubmit : SubmitHandler<TransFormationInputs> = async (data) => {
+    const {color,prompt,title,aspectRatio} = data
     setIsTransforming(true);
     const config = transformationTypes[type as keyof typeof transformationTypes].config
 
@@ -41,8 +43,8 @@ function AddTranFormationForm({type,user}:TransformationProps) {
 
     if(type === 'remove' || type === 'recolor'){
       const updatedConfig = {
-          to: data?.color,
-          prompt: data?.prompt
+          to:color,
+          prompt:prompt
         }
         setConfig({
           ...config,
@@ -52,6 +54,7 @@ function AddTranFormationForm({type,user}:TransformationProps) {
         });
       }else{
       setConfig(config)
+      setImageData({...imageData,...image,title,prompt,aspectRatio,transformationType:type,author:user._id,config})
     }
   }
   return (
@@ -126,7 +129,7 @@ function AddTranFormationForm({type,user}:TransformationProps) {
           )}
         />
       }
-      <div className="grid grid-cols-2 items-center gap-3">
+      <div className="flex flex-row justify-between gap-4">
       <FormField
           control={form.control}
           name="publicId"
@@ -154,6 +157,13 @@ function AddTranFormationForm({type,user}:TransformationProps) {
         />
         </div>
         <Button disabled={isTransforming} className="w-full" type="submit">Transform</Button>
+        {
+          !isTransforming && imageData &&
+          <SaveImage
+            imageData={imageData!}
+            setImageData={setImageData}
+          />
+        }
       </form>
     </Form>
   )
