@@ -7,7 +7,7 @@ declare type CreateUser = {
     lastName: string;
 }
 
-type DBUser = {
+declare type DBUser = {
     _id: string;
     clerkId: string;
     email: string;
@@ -22,7 +22,7 @@ type DBUser = {
     __v: number;
 }
 
-type DBImage = {
+declare type DBImage = {
     title: string;
     transformationType: string;
     publicId: string;
@@ -35,4 +35,10 @@ type DBImage = {
     color?: string;
     prompt?: string;
     author: string;
+}
+
+declare interface ImageInterface extends DBImage{
+    _id: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

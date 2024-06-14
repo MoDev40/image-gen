@@ -6,12 +6,12 @@ import { PlaceholderValue } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
 import Link from "next/link"
 
-function RecentImages({ images }: { images:ImageDocument[] }) {
+function RecentImages({ images }: { images:ImageInterface[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {
           images.map((image) => (
-          <Link href={`/transformations/${image._id}`}>
+          <Link key={image._id} href={`/transformations/${image._id}`}>
             <Image src={getCldImageUrl({
             width:image?.width,
             height:image?.height,

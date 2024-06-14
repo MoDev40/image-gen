@@ -1,9 +1,8 @@
 import RecentImages from "@/components/shared/RecentImages";
 import { API } from "@/lib/config";
-import { ImageDocument } from "@/lib/database/models/imageModal";
 import axios from "axios";
 
-async function getImages () : Promise<ImageDocument[]> {
+async function getImages () : Promise<ImageInterface[]> {
   const res = await axios.get(`${API}/images`);
   return await res.data.images;
 }

@@ -1,6 +1,7 @@
 "use client"
 import { plans } from '@/constants';
 import { Button } from '../ui/button';
+import Image from 'next/image';
 
 function PricingPlan() {
   return (
@@ -8,7 +9,7 @@ function PricingPlan() {
     <div className="grid md:grid-cols-3 gap-8">
       {plans.map((plan) => (
         <div key={plan._id} className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center">
-          <img src={plan.icon} alt={plan.name} className="w-16 h-16 mb-4" />
+          <Image src={plan.icon} alt={plan.name} width={28} height={28}  className="w-16 h-16 mb-4" />
           <h2 className="text-xl font-semibold mb-2">{plan.name}</h2>
           <p className="text-gray-500 mb-4">${plan.price}/month</p>
           <p className="text-gray-700 font-semibold mb-4">{plan.credits} Credits</p>
