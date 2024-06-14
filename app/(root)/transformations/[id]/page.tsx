@@ -1,8 +1,14 @@
 import React from 'react'
 
-function TransformationPage() {
+interface Params {
+  id:string
+}
+function TransformationPage({params}:{params:Params}) {
   return (
-    <div>TransformationPage</div>
+    <div>
+      <h1>TransformationPage</h1>
+      <h2>id: {params.id}</h2>
+    </div>
   )
 }
 
