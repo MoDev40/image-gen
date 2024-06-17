@@ -1,6 +1,6 @@
 "use client"
-import Image from 'next/image'
 import axios from "axios"
+import Image from 'next/image'
 
 function Download({url}:{url:string}) {
     async function handleDownload(){

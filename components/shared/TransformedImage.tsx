@@ -1,12 +1,11 @@
 "use client"
-import React from 'react'
-import { Button } from '../ui/button';
+import { skeleton } from '@/lib/utils';
 import { CldImage, getCldImageUrl } from 'next-cloudinary';
 import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
-import { skeleton } from '@/lib/utils';
-import Download from './Download';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Button } from '../ui/button';
+import Download from './Download';
 
 interface TransFormedProps {
   image:ImageInterface;

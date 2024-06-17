@@ -1,5 +1,5 @@
-import AddTranFormationForm from '@/components/shared/AddTranFormationForm';
 import Header from '@/components/shared/Header';
+import TranFormationForm from '@/components/shared/TranFormationForm';
 import { transformationTypes } from '@/constants';
 import { getUser } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
@@ -23,7 +23,7 @@ async function AddTransformationType({params}:{params:Params}) {
   return (
     <>
     <Header title={transform.title} subtitle={transform.subTitle}/>
-    <AddTranFormationForm user={user} updateImage={null} action='Add'  type={transform.type}/>
+    <TranFormationForm user={user} updateImage={null} action='Add'  type={transform.type}/>
     </>
   )
 }

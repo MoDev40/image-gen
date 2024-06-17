@@ -1,7 +1,7 @@
 "use client"
 import { plans } from '@/constants';
-import { Button } from '../ui/button';
 import Image from 'next/image';
+import { Button } from '../ui/button';
 
 function PricingPlan() {
   return (

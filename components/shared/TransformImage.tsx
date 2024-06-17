@@ -4,7 +4,7 @@ import { CldImage, getCldImageUrl } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
-import { Image as TransformImgStateType } from "./AddTranFormationForm";
+import { Image as TransformImgStateType } from "./TranFormationForm";
 import Download from "./Download";
 
 interface TransFormProps {
