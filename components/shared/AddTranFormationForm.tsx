@@ -2,7 +2,7 @@
 import { aspectRatioOptions, transformationTypes } from "@/constants"
 import { TransFormationInputs, transformSchema } from "@/types/schema.forms"
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
@@ -21,16 +21,36 @@ export type Image = {
 
 interface TransformationProps {
   type: string;
-  user: DBUser;
+  user_id: string;
+  data:ImageInterface | null;
+  action: string;
 }
-function AddTranFormationForm({type,user}:TransformationProps) {
+
+function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
   const [image,setImage] = useState<Image>({} as Image)
   const [imageData,setImageData] = useState<DBImage | null >(null)
   const [config,setConfig] = useState<any>()
   const [isTransforming,setIsTransforming] = useState<boolean>(false)
 
+  const initialValues = data && action === 'Update' ? {
+    title: data?.title,
+    aspectRatio: data?.aspectRatio,
+    color: data?.color,
+    prompt: data?.prompt,
+    publicId: data?.publicId,
+  } : {
+    title: '',
+    aspectRatio: '',
+    color: '',
+    prompt: '',
+    publicId: '',
+  }
 
-  const form = useForm<TransFormationInputs>({resolver:zodResolver(transformSchema)})
+  useEffect(()=>{
+    setImage({...image,width:data?.width!,height:data?.height!,publicId:data?.publicId!,secureUrl:data?.secureUrl!})
+  },[])
+
+  const form = useForm<TransFormationInputs>({resolver:zodResolver(transformSchema),defaultValues:initialValues})
   const onSubmit : SubmitHandler<TransFormationInputs> = async (data) => {
     const {color,prompt,title,aspectRatio} = data
     setIsTransforming(true);
@@ -54,7 +74,7 @@ function AddTranFormationForm({type,user}:TransformationProps) {
         });
       }else{
       setConfig(config)
-      setImageData({...imageData,...image,title,prompt,aspectRatio,transformationType:type,author:user._id,config})
+      setImageData({...imageData,...image,title,prompt,aspectRatio,transformationType:type,author:user_id,config})
     }
   }
   return (
@@ -138,11 +158,11 @@ function AddTranFormationForm({type,user}:TransformationProps) {
               <FormLabel/>
               <FormControl>
                 <MediaUploader
-                image={image}
-                onValueChange={field.onChange}
-                publicId={field.value}
-                setImage={setImage}
-                user={user}
+                  image={image}
+                  onValueChange={field.onChange}
+                  publicId={field.value}
+                  setImage={setImage}
+                  user_id={user_id}
                 />
               </FormControl>
               <FormMessage />
@@ -162,6 +182,8 @@ function AddTranFormationForm({type,user}:TransformationProps) {
           <SaveImage
             imageData={imageData!}
             setImageData={setImageData}
+            action={action}
+            id={data?._id!}
           />
         }
       </form>

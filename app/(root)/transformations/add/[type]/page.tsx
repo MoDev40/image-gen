@@ -34,7 +34,7 @@ async function AddTransformationType({params}:{params:Params}) {
     <>
     <Header title={transform.title} subtitle={transform.subTitle}/>
     {user.creditBalance === 0 ? <CreditAlert/> :
-    <AddTranFormationForm user={user}  type={transform.type}/>}
+    <AddTranFormationForm user_id={user._id} data={null} action='Add'  type={transform.type}/>}
     </>
   )
 }

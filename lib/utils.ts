@@ -1,5 +1,7 @@
+import axios from "axios";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { API } from "./config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -27,3 +29,8 @@ const toBase64 = (str: string) =>
 export const skeleton = `data:image/svg+xml;base64,${toBase64(
   shimmer(1000, 1000)
 )}`
+
+export async function getImageById (id:string) : Promise<ImageInterface> {
+  const res = await axios.get(`${API}/images/${id}`);
+  return await res.data.image;
+}

@@ -1,8 +1,19 @@
-import React from 'react'
+import AddTranFormationForm from '@/components/shared/AddTranFormationForm';
+import { getImageById } from '@/lib/utils';
 
-function UpdateTransformationPage() {
+interface Params {
+  id:string
+}
+
+async function UpdateTransformationPage({params}: {params: Params}) {
+  const image = await getImageById(params.id);
   return (
-    <div>UpdateTransformationPage</div>
+    <AddTranFormationForm
+    type={image.transformationType}
+    data={image}
+    action='Update'
+    user_id={image.author}
+    />
   )
 }
 
