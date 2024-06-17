@@ -1,14 +1,8 @@
 import AddTranFormationForm from '@/components/shared/AddTranFormationForm';
-import CreditAlert from '@/components/shared/CreditAlert';
 import Header from '@/components/shared/Header';
 import { transformationTypes } from '@/constants';
-import { API } from '@/lib/config';
+import { getUser } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
-import axios from 'axios';
-
-interface Params {
-  type:string
-}
 
 interface TransformationType {
   type: string;
@@ -20,10 +14,6 @@ interface TransformationType {
   icon: string;
 }
 
-async function getUser (id:string) : Promise<DBUser> {
-  const res = await axios.get(`${API}/users/${id}`);
-  return await res.data.user;
-}
 
 async function AddTransformationType({params}:{params:Params}) {
   const {type} = params
@@ -33,8 +23,7 @@ async function AddTransformationType({params}:{params:Params}) {
   return (
     <>
     <Header title={transform.title} subtitle={transform.subTitle}/>
-    {user.creditBalance === 0 ? <CreditAlert/> :
-    <AddTranFormationForm user_id={user._id} data={null} action='Add'  type={transform.type}/>}
+    <AddTranFormationForm user={user} updateImage={null} action='Add'  type={transform.type}/>
     </>
   )
 }

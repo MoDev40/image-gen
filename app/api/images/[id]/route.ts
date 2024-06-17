@@ -2,9 +2,6 @@ import connectToDatabase from "@/lib/database/connectionDatabase";
 import Image from "@/lib/database/models/imageModal";
 import { NextRequest, NextResponse } from "next/server";
 
-type Params = {
-    id:string;
-}
 export async function GET(req:NextRequest,{params}:{params:Params}) {
     try {
         await connectToDatabase()

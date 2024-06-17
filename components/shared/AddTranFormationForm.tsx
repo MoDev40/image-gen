@@ -1,13 +1,17 @@
 "use client"
 import { aspectRatioOptions, transformationTypes } from "@/constants"
+import { API } from "@/lib/config"
 import { TransFormationInputs, transformSchema } from "@/types/schema.forms"
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from "axios"
 import { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { toast } from "../ui/use-toast"
+import CreditAlert from "./CreditAlert"
 import MediaUploader from "./MediaUploader"
 import SaveImage from "./SaveImage"
 import TransformImage from "./TransformImage"
@@ -21,23 +25,23 @@ export type Image = {
 
 interface TransformationProps {
   type: string;
-  user_id: string;
-  data:ImageInterface | null;
+  user: DBUser | null;
+  updateImage:ImageInterface | null;
   action: string;
 }
 
-function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
+function AddTranFormationForm({type,user,updateImage,action}:TransformationProps) {
   const [image,setImage] = useState<Image>({} as Image)
   const [imageData,setImageData] = useState<DBImage | null >(null)
   const [config,setConfig] = useState<any>()
   const [isTransforming,setIsTransforming] = useState<boolean>(false)
 
-  const initialValues = data && action === 'Update' ? {
-    title: data?.title,
-    aspectRatio: data?.aspectRatio,
-    color: data?.color,
-    prompt: data?.prompt,
-    publicId: data?.publicId,
+  const initialValues = updateImage && action === 'Update' ? {
+    title: updateImage?.title,
+    aspectRatio: updateImage?.aspectRatio,
+    color: updateImage?.color,
+    prompt: updateImage?.prompt,
+    publicId: updateImage?.publicId,
   } : {
     title: '',
     aspectRatio: '',
@@ -47,7 +51,7 @@ function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
   }
 
   useEffect(()=>{
-    setImage({...image,width:data?.width!,height:data?.height!,publicId:data?.publicId!,secureUrl:data?.secureUrl!})
+    setImage({...image,width:updateImage?.width!,height:updateImage?.height!,publicId:updateImage?.publicId!,secureUrl:updateImage?.secureUrl!})
   },[])
 
   const form = useForm<TransFormationInputs>({resolver:zodResolver(transformSchema),defaultValues:initialValues})
@@ -59,6 +63,16 @@ function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
     if(type === 'fill'){
       const imgSize = aspectRatioOptions[data.aspectRatio as keyof typeof aspectRatioOptions]
       setImage({...image, width: imgSize.width, height: imgSize.height})
+    }
+
+    if(action === "Update"){
+      await axios.put(`${API}/users/${user?._id || updateImage?.author}/decrease`)
+      toast({
+        title: "Image Uploaded",
+        description: "Image uploaded successfully 5 credit has been used", 
+        duration: 5000,
+        className:"bg-green-400 text-white"
+      })
     }
 
     if(type === 'remove' || type === 'recolor'){
@@ -74,12 +88,13 @@ function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
         });
       }else{
       setConfig(config)
-      setImageData({...imageData,...image,title,prompt,aspectRatio,transformationType:type,author:user_id,config})
+      setImageData({...imageData,...image,title,prompt,aspectRatio,transformationType:type,author:user?._id! || updateImage?.author! ,config})
     }
   }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-5">
+      { user?.creditBalance === 0 && <CreditAlert/> }
       <FormField
           control={form.control}
           name="title"
@@ -127,7 +142,7 @@ function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
             <FormItem>
               <FormLabel/>
               <FormControl>
-                <Input placeholder="color" {...field} />
+                <Input type="text" placeholder="color" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -142,7 +157,7 @@ function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
             <FormItem>
               <FormLabel/>
               <FormControl>
-                <Input placeholder="prompt" {...field} />
+                <Input type="text" placeholder="prompt" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -162,7 +177,7 @@ function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
                   onValueChange={field.onChange}
                   publicId={field.value}
                   setImage={setImage}
-                  user_id={user_id}
+                  user_id={user?._id!}
                 />
               </FormControl>
               <FormMessage />
@@ -183,7 +198,7 @@ function AddTranFormationForm({type,user_id,data,action}:TransformationProps) {
             imageData={imageData!}
             setImageData={setImageData}
             action={action}
-            id={data?._id!}
+            id={updateImage?._id!}
           />
         }
       </form>
