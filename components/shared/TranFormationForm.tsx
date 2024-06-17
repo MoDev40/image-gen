@@ -30,7 +30,7 @@ interface TransformationProps {
   action: string;
 }
 
-function AddTranFormationForm({type,user,updateImage,action}:TransformationProps) {
+function TranFormationForm({type,user,updateImage,action}:TransformationProps) {
   const [image,setImage] = useState<Image>({} as Image)
   const [imageData,setImageData] = useState<DBImage | null >(null)
   const [config,setConfig] = useState<any>()
@@ -102,7 +102,7 @@ function AddTranFormationForm({type,user,updateImage,action}:TransformationProps
             <FormItem>
               <FormLabel/>
               <FormControl>
-                <Input placeholder="title" {...field} />
+                <Input type="text" placeholder="title" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -206,4 +206,4 @@ function AddTranFormationForm({type,user,updateImage,action}:TransformationProps
   )
 }
 
-export default AddTranFormationForm
+export default TranFormationForm

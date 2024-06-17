@@ -7,7 +7,7 @@ import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { useToast } from "../ui/use-toast";
-import { Image as ImageInterface } from "./AddTranFormationForm";
+import { Image as ImageInterface } from "./TranFormationForm";
 
 interface MediaUploaderProps {
   setImage:Dispatch<SetStateAction<ImageInterface>>;
@@ -81,7 +81,7 @@ function MediaUploader({publicId,image,user_id,setImage,onValueChange}: MediaUpl
                 alt="upload-btn"
                 />
               </button>
-              <p>upload image</p>
+              <span>upload</span>
             </div>
           }
         </div>

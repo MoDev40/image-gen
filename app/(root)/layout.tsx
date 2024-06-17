@@ -15,8 +15,10 @@ import UnAuth from '@/components/shared/UnAuth'
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import React from 'react'
 import { Button } from '@/components/ui/button'
+import { usePathname } from "next/navigation"
 
 function Layout({children}:{children:React.ReactNode}) {
+  const pathName = usePathname()
   return (
     <div>
       <SignedOut>
@@ -87,12 +89,12 @@ function Layout({children}:{children:React.ReactNode}) {
               <ul className="flex flex-col space-y-5">
                 {
                     navLinks.slice(0,6).map(nav =>(
-                        <li key={nav.route}>
+                        <li className={`${nav.route === pathName && 'bg-indigo-300 rounded py-1 px-2 text-white'}`} key={nav.route}>
                         <Link
                         href={nav.route}
-                        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                        className="flex flex-row items-center space-x-4  hover:text-foreground"
                         >
-                        <Image src={nav.icon} alt={nav.label} width={25} height={18}/>
+                        <Image  src={nav.icon} alt={nav.label} width={25} height={25}/>
                         <span>{nav.label}</span>
                         </Link>
                         </li>
@@ -109,13 +111,13 @@ function Layout({children}:{children:React.ReactNode}) {
               <nav className="grid gap-6 text-lg font-medium">
               <ul className="flex flex-col space-y-5">
                 {
-                    navLinks.slice(6).map(nav =>(
-                        <li key={nav.route}>
+                    navLinks.slice(6).map(nav =>(                      
+                        <li className={`${nav.route === pathName && 'bg-indigo-300 rounded py-1 px-2 text-white'}`} key={nav.route}>
                         <Link
                         href={nav.route}
-                        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                        className="flex flex-row items-center space-x-4 hover:text-foreground"
                         >
-                        <Image src={nav.icon} alt={nav.label} width={25} height={18}/>
+                        <Image src={nav.icon} alt={nav.label} width={25} height={25}/>
                         <span>{nav.label}</span>
                         </Link>
                         </li>
