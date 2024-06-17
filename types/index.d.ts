@@ -47,3 +47,7 @@ declare interface ProfileInterface {
     creditBalance: number;
     imageManipulated: number;
 }
+
+declare type Params = {
+    [key:string]:string;
+} 

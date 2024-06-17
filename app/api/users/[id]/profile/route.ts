@@ -3,9 +3,7 @@ import Image from "@/lib/database/models/imageModal";
 import User from "@/lib/database/models/userModal";
 import {NextRequest,NextResponse} from "next/server"
 
-type Params = {
-    id:string;
-} 
+
 export async function GET(req:NextRequest,{params}:{params:Params}){
     try {
 

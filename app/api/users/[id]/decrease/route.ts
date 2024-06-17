@@ -2,9 +2,7 @@ import connectToDatabase from "@/lib/database/connectionDatabase";
 import User from "@/lib/database/models/userModal";
 import { NextRequest, NextResponse } from "next/server";
 
-type Params = {
-    id:string;
-} 
+
 export async function PUT(req:NextRequest,{params}:{params:Params}){
     try {
         await connectToDatabase()

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { API } from "./config";
 
 export function cn(...inputs: ClassValue[]) {
