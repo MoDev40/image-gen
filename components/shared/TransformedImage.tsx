@@ -1,69 +1,58 @@
 "use client"
-import { skeleton } from "@/lib/utils";
-import { CldImage, getCldImageUrl } from "next-cloudinary";
-import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
-import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
-import { Image as ImageInterface } from "./AddTranFormationForm";
-import Download from "./Download";
+import React from 'react'
+import { Button } from '../ui/button';
+import { CldImage, getCldImageUrl } from 'next-cloudinary';
+import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
+import { skeleton } from '@/lib/utils';
+import Download from './Download';
+import Image from 'next/image';
 
 interface TransFormedProps {
   image:ImageInterface;
-  transformationConfig:{
-    [key: string]:any
-  };
-  isTransforming:boolean;
-  setIsTransforming:Dispatch<SetStateAction<boolean>>;
 }
-function TransformedImage({image,transformationConfig,isTransforming,setIsTransforming}:TransFormedProps) {
-
+function TransformedImage({ image } : TransFormedProps) {
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-row justify-between">
-          <h1 className="font-bold text-slate-700">Transformed</h1>
-          { image?.publicId && transformationConfig &&
-            <Download
-            url={getCldImageUrl({
-              width: image?.width,
-              height: image?.height,
-              src: image?.publicId,
-              ...transformationConfig
-            })}
-          />
-        } 
+    <div className='w-full flex flex-col gap-4 p-4'>
+      <div className='flex flex-col'>
+        <h1 className='font-bold text-2xl'>{image.title}</h1>
+        <h3 className='font-normal text-xl'>type {image.transformationType}</h3>
       </div>
-      { image?.publicId && transformationConfig ?
-        <div className="cursor-pointer overflow-hidden">
-            <CldImage
-              src={image.publicId}
-              width={image?.width}
-              height={image?.height}
-              alt="image/transformed"
-              placeholder={skeleton as PlaceholderValue}
-              onError={()=>{
-                setIsTransforming(false);
-              }}
-              onLoad={()=>{
-                setIsTransforming(false)
-              }}
-              {...transformationConfig}
-          />
-          {
-            isTransforming && 
-            <div>
-              <Image
-              src="/assets/icons/spinner.svg"
-              alt="spinner"
-              width={24}
-              height={24}
+      <div className='flex flex-row space-x-3 items-center justify-between'>
+        <div className='flex flex-col'>
+        <h3 className="font-bold text-slate-700">Original</h3>
+              <CldImage
+                src={image?.publicId}
+                width={image?.width}
+                height={image?.height}
+                alt="image/original"
+                placeholder={skeleton as PlaceholderValue}
               />
-            </div>
-          }
-        </div> :
-        <div className="flex flex-col justify-center items-center h-24 bg-white shadow p-5 rounded">
-          <h2>Transformed image</h2>
-        </div> 
-      }
+        </div>
+        <div className='flex flex-col'>
+          <div className="flex flex-row items-center justify-between">
+            <h1 className="font-bold text-slate-700">Transformed</h1>
+              <Download
+                url={getCldImageUrl({
+                  width: image?.width,
+                  height: image?.height,
+                  src: image?.publicId,
+                  ...image.config
+              })}
+            />
+          </div>
+          <Image src={getCldImageUrl({
+            width:image?.width,
+            height:image?.height,
+            src:image?.publicId,
+            ...image.config
+            })} 
+            alt={image.publicId} placeholder={skeleton as PlaceholderValue} width={image.width} height={image.height} />
+        </div>
+      </div>
+      <div className='flex flex-col space-y-3'>
+        <Button className='w-full'>Update</Button>
+        <Button variant="destructive" className='w-full'>Delete</Button>
+      </div>      
     </div>
   )
 }
