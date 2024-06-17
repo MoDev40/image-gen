@@ -1,5 +1,4 @@
 "use client"
-import { ImageDocument } from "@/lib/database/models/imageModal"
 import { skeleton } from "@/lib/utils"
 import { getCldImageUrl } from "next-cloudinary"
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props"

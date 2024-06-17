@@ -9,8 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import MediaUploader from "./MediaUploader"
-import TransformedImage from "./TransformedImage"
 import SaveImage from "./SaveImage"
+import TransformImage from "./TransformImage"
 
 export type Image = {
   secureUrl: string; 
@@ -149,7 +149,7 @@ function AddTranFormationForm({type,user}:TransformationProps) {
             </FormItem>
           )}
         />
-        <TransformedImage
+        <TransformImage
           image={image}
           transformationConfig={config}
           isTransforming={isTransforming}
