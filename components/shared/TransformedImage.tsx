@@ -6,11 +6,13 @@ import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
 import { skeleton } from '@/lib/utils';
 import Download from './Download';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface TransFormedProps {
   image:ImageInterface;
 }
 function TransformedImage({ image } : TransFormedProps) {
+  const router = useRouter()
   return (
     <div className='w-full flex flex-col gap-4 p-4'>
       <div className='flex flex-col'>
@@ -18,7 +20,7 @@ function TransformedImage({ image } : TransFormedProps) {
         <h3 className='font-normal text-xl'>type {image.transformationType}</h3>
       </div>
       <div className='flex flex-row space-x-3 items-center justify-between'>
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-4'>
         <h3 className="font-bold text-slate-700">Original</h3>
               <CldImage
                 src={image?.publicId}
@@ -28,7 +30,7 @@ function TransformedImage({ image } : TransFormedProps) {
                 placeholder={skeleton as PlaceholderValue}
               />
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-4'>
           <div className="flex flex-row items-center justify-between">
             <h1 className="font-bold text-slate-700">Transformed</h1>
               <Download
@@ -50,7 +52,9 @@ function TransformedImage({ image } : TransFormedProps) {
         </div>
       </div>
       <div className='flex flex-col space-y-3'>
-        <Button className='w-full'>Update</Button>
+        <Button onClick={()=>{
+          router.push(`/transformations/${image._id}/update`)
+        }} className='w-full'>Update</Button>
         <Button variant="destructive" className='w-full'>Delete</Button>
       </div>      
     </div>
