@@ -42,3 +42,8 @@ declare interface ImageInterface extends DBImage{
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+declare interface ProfileInterface {
+    creditBalance: number;
+    imageManipulated: number;
+}

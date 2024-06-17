@@ -34,3 +34,8 @@ export async function getImageById (id:string) : Promise<ImageInterface> {
   const res = await axios.get(`${API}/images/${id}`);
   return await res.data.image;
 }
+
+export async function getUser (id:string) : Promise<DBUser> {
+  const res = await axios.get(`${API}/users/${id}`);
+  return await res.data.user;
+}
