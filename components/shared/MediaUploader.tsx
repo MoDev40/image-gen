@@ -14,9 +14,9 @@ interface MediaUploaderProps {
   image:ImageInterface
   onValueChange:(value:string) => void;
   publicId: string;
-  user:DBUser
+  user_id:string;
 }
-function MediaUploader({publicId,image,user,setImage,onValueChange}: MediaUploaderProps) {
+function MediaUploader({publicId,image,user_id,setImage,onValueChange}: MediaUploaderProps) {
   const { toast } = useToast()
 
   async function handleSuccess(result:any) {
@@ -29,7 +29,7 @@ function MediaUploader({publicId,image,user,setImage,onValueChange}: MediaUpload
     }))
 
     onValueChange(result?.info?.public_id)
-    await axios.put(`${API}/users/${user._id}/decrease`)
+    await axios.put(`${API}/users/${user_id}/decrease`)
     toast({
       title: "Image Uploaded",
       description: "Image uploaded successfully 5 credit has been used", 
@@ -66,8 +66,8 @@ function MediaUploader({publicId,image,user,setImage,onValueChange}: MediaUpload
             <div className="cursor-pointer overflow-hidden">
             <CldImage
                 src={publicId || image?.publicId}
-                width={image?.width}
-                height={image?.height}
+                width={image?.width | 200}
+                height={image?.height | 300}
                 alt="image/uploaded"
                 placeholder={skeleton as PlaceholderValue}
               />

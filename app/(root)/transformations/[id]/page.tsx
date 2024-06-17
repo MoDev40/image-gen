@@ -1,13 +1,12 @@
-import TransformedImage from '@/components/shared/TransformedImage'
+import TransformedImage from '@/components/shared/TransformedImage';
 import { API } from '@/lib/config';
 import axios from 'axios';
-import React from 'react'
 
 interface Params {
   id:string
 }
 
-async function getImageById (id:string) : Promise<ImageInterface> {
+export async function getImageById (id:string) : Promise<ImageInterface> {
   const res = await axios.get(`${API}/images/${id}`);
   return await res.data.image;
 }
