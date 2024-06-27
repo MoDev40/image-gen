@@ -25,7 +25,7 @@ function PricingPlan() {
               </li>
             ))}
           </ul>
-          <Button className="transition">Choose Plan</Button>
+          <Button disabled={plan.price === 0} className="transition">{plan.price === 0 ? "Free Plan used" : "Choose Plan"}</Button>
         </div>
       ))}
     </div>
